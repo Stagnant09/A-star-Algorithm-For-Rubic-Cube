@@ -2077,7 +2077,9 @@ class Player {
 		int cost;
 		Player() {
 			cost = 0;
-			position[0] = position[1] = position[2] = 0;
+			position[0] = 0;
+			position[1] = 0;
+			position[2] = 0;
 		}
 };
 
