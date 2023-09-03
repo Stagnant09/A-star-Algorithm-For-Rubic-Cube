@@ -6,7 +6,7 @@ using namespace std;
 
 
 short max(short a, short b, short c, short d, short e, short f) {
-	int temp = a;
+	uint64_t temp = a;
 	temp = (b > a) ? b : a;
 	temp = (c > temp) ? c : temp;
 	temp = (d > temp) ? d : temp;
@@ -15,7 +15,7 @@ short max(short a, short b, short c, short d, short e, short f) {
 	return temp;
 }
 
-bool isFull(short input, short white, int red, int blue, int green, int yellow, int orange) {
+bool isFull(short input, short white, uint64_t red, uint64_t blue, uint64_t green, uint64_t yellow, uint64_t orange) {
 	if (input == 0) {
 		if (white == 9) {
 			return false;
@@ -72,22 +72,22 @@ void increaseColor(short id, short& white, short& red, short& orange, short& yel
 
 class Pixel {
 	public:
-		unsigned __int64 pixelId = 0;
+		uint64_t pixelId = 0;
 		short position[4][3] = {{0,0,0},{0,0,0},{0,0,0},{0,0,0}};
-		unsigned __int64 idProducer() {
-			unsigned __int64 iD = 0;
-			iD += position[0][0] * 100000000000;
-			iD += position[0][1] * 10000000000;
-			iD += position[0][2] * 1000000000;
-			iD += position[1][0] * 100000000;
-			iD += position[1][1] * 10000000;
-			iD += position[1][2] * 1000000;
-			iD += position[2][0] * 100000;
-			iD += position[2][1] * 10000;
-			iD += position[2][2] * 1000;
-			iD += position[3][0] * 100;
-			iD += position[3][1] * 10;
-			iD += position[3][2];
+		uint64_t idProducer() {
+			uint64_t iD = 0;
+			iD += (uint64_t)position[0][0] * 100000000000;
+			iD += (uint64_t)position[0][1] * 10000000000;
+			iD += (uint64_t)position[0][2] * 1000000000;
+			iD += (uint64_t)position[1][0] * 100000000;
+			iD += (uint64_t)position[1][1] * 10000000;
+			iD += (uint64_t)position[1][2] * 1000000;
+			iD += (uint64_t)position[2][0] * 100000;
+			iD += (uint64_t)position[2][1] * 10000;
+			iD += (uint64_t)position[2][2] * 1000;
+			iD += (uint64_t)position[3][0] * 100;
+			iD += (uint64_t)position[3][1] * 10;
+			iD += (uint64_t)position[3][2];
 			return iD;
 		} 
 		Pixel(Pixel &px) {
@@ -122,7 +122,7 @@ class Pixel {
 			position[3][2] = p3[2];
 		}
 		short pxlColor; //Colors: 0 = Red, 1 = Orange, 2 = Yellow, 3 = Green, 4 = Blue, 5 = White
-		void editColor(int colr) {
+		void editColor(uint64_t colr) {
 			pxlColor = colr;
 		}
 		void fixId() {
@@ -135,12 +135,12 @@ class Pixel {
 
 class Rotation {
 	public:
-		//int ornt;
+		//uint64_t ornt;
 		short noOfBlocks;
 		short lOrR;
 		short numero = 0;
 		Pixel* pxlIncluded;
-		Rotation(int lOrR, int noOfBlocks, Pixel* pxlIncluded) {
+		Rotation(uint64_t lOrR, uint64_t noOfBlocks, Pixel* pxlIncluded) {
 			this->noOfBlocks = noOfBlocks;
 			this->lOrR = lOrR;
 			this->pxlIncluded = pxlIncluded;
@@ -148,7 +148,7 @@ class Rotation {
 		Rotation() {
 
 		}
-		Rotation(int lOrR, int noOfBlocks, int numero) {
+		Rotation(uint64_t lOrR, uint64_t noOfBlocks, uint64_t numero) {
 			this->noOfBlocks = noOfBlocks;
 			this->lOrR = lOrR;
 			this->numero = numero;
@@ -174,13 +174,13 @@ class Cube {
 				short p1[3] = { 0,0,0 };
 				short p2[3] = { 0,0,0 };
 				short p3[3] = { 0,0,0 };
-				int colr = rand() % 6;
+				uint64_t colr = rand() % 6;
 				while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 					colr = rand() % 6;
 				}
 				if (side == 0) {
 					//Starting from point (0,0,0)
-					int colr = rand() % 6;
+					uint64_t colr = rand() % 6;
 					while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 						colr = rand() % 6;
 					}
@@ -192,7 +192,7 @@ class Cube {
 					pixels[pxlsCreated].pxlColor = colr;
 					increaseColor(colr, white, red, orange, yellow, green, blue);
 					pxlsCreated++;
-					for (int j = 1; j < 3; j++) {
+					for (uint64_t j = 1; j < 3; j++) {
 						colr = rand() % 6;
 						while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 							colr = rand() % 6;
@@ -226,7 +226,7 @@ class Cube {
 					pixels[pxlsCreated].pxlColor = colr;
 					increaseColor(colr, white, red, orange, yellow, green, blue);
 					pxlsCreated++;
-					for (int j = 1; j < 3; j++) {
+					for (uint64_t j = 1; j < 3; j++) {
 						colr = rand() % 6;
 						while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 							colr = rand() % 6;
@@ -261,7 +261,7 @@ class Cube {
 					pixels[pxlsCreated].pxlColor = colr;
 					increaseColor(colr, white, red, orange, yellow, green, blue);
 					pxlsCreated++;
-					for (int j = 1; j < 3; j++) {
+					for (uint64_t j = 1; j < 3; j++) {
 						colr = rand() % 6;
 						while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 							colr = rand() % 6;
@@ -305,7 +305,7 @@ class Cube {
 
 					//Complete Side
 					//Complete Column
-					for (int j = 1; j < 3; j++) {
+					for (uint64_t j = 1; j < 3; j++) {
 						colr = rand() % 6;
 						while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 							colr = rand() % 6;
@@ -339,7 +339,7 @@ class Cube {
 					pixels[pxlsCreated].pxlColor = colr;
 					increaseColor(colr, white, red, orange, yellow, green, blue);
 					pxlsCreated++;
-					for (int j = 1; j < 3; j++) {
+					for (uint64_t j = 1; j < 3; j++) {
 						colr = rand() % 6;
 						while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 							colr = rand() % 6;
@@ -369,7 +369,7 @@ class Cube {
 					p1[0] = 2; p1[1] = 1; p1[2] = 3;
 					p2[0] = 3; p2[1] = 1; p2[2] = 3;
 					p3[0] = 3; p3[1] = 0; p3[2] = 3;
-					for (int j = 1; j < 3; j++) {
+					for (uint64_t j = 1; j < 3; j++) {
 						colr = rand() % 6;
 						while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 							colr = rand() % 6;
@@ -407,7 +407,7 @@ class Cube {
 					pixels[pxlsCreated].pxlColor = colr;
 					increaseColor(colr, white, red, orange, yellow, green, blue);
 					pxlsCreated++;
-					for (int j = 1; j < 3; j++) {
+					for (uint64_t j = 1; j < 3; j++) {
 						colr = rand() % 6;
 						while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 							colr = rand() % 6;
@@ -441,7 +441,7 @@ class Cube {
 					pixels[pxlsCreated].pxlColor = colr;
 					increaseColor(colr, white, red, orange, yellow, green, blue);
 					pxlsCreated++;
-					for (int j = 1; j < 3; j++) {
+					for (uint64_t j = 1; j < 3; j++) {
 						colr = rand() % 6;
 						while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 							colr = rand() % 6;
@@ -476,7 +476,7 @@ class Cube {
 					pixels[pxlsCreated].pxlColor = colr;
 					increaseColor(colr, white, red, orange, yellow, green, blue);
 					pxlsCreated++;
-					for (int j = 1; j < 3; j++) {
+					for (uint64_t j = 1; j < 3; j++) {
 						colr = rand() % 6;
 						while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 							colr = rand() % 6;
@@ -515,7 +515,7 @@ class Cube {
 					pixels[pxlsCreated].pxlColor = colr;
 					increaseColor(colr, white, red, orange, yellow, green, blue);
 					pxlsCreated++;
-					for (int j = 1; j < 3; j++) {
+					for (uint64_t j = 1; j < 3; j++) {
 						colr = rand() % 6;
 						while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 							colr = rand() % 6;
@@ -550,7 +550,7 @@ class Cube {
 					pixels[pxlsCreated].pxlColor = colr;
 					increaseColor(colr, white, red, orange, yellow, green, blue);
 					pxlsCreated++;
-					for (int j = 1; j < 3; j++) {
+					for (uint64_t j = 1; j < 3; j++) {
 						colr = rand() % 6;
 						while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 							colr = rand() % 6;
@@ -581,7 +581,7 @@ class Cube {
 					p1[0] = 2; p1[1] = 2; p1[2] = 0;
 					p2[0] = 3; p2[1] = 3; p2[2] = 0;
 					p3[0] = 2; p3[1] = 2; p3[2] = 0;
-					for (int j = 1; j < 3; j++) {
+					for (uint64_t j = 1; j < 3; j++) {
 						colr = rand() % 6;
 						while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 							colr = rand() % 6;
@@ -620,7 +620,7 @@ class Cube {
 					pixels[pxlsCreated].pxlColor = colr;
 					increaseColor(colr, white, red, orange, yellow, green, blue);
 					pxlsCreated++;
-					for (int j = 1; j < 3; j++) {
+					for (uint64_t j = 1; j < 3; j++) {
 						colr = rand() % 6;
 						while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 							colr = rand() % 6;
@@ -655,7 +655,7 @@ class Cube {
 					pixels[pxlsCreated].pxlColor = colr;
 					increaseColor(colr, white, red, orange, yellow, green, blue);
 					pxlsCreated++;
-					for (int j = 1; j < 3; j++) {
+					for (uint64_t j = 1; j < 3; j++) {
 						colr = rand() % 6;
 						while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 							colr = rand() % 6;
@@ -690,7 +690,7 @@ class Cube {
 					pixels[pxlsCreated].pxlColor = colr;
 					increaseColor(colr, white, red, orange, yellow, green, blue);
 					pxlsCreated++;
-					for (int j = 1; j < 3; j++) {
+					for (uint64_t j = 1; j < 3; j++) {
 						colr = rand() % 6;
 						while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 							colr = rand() % 6;
@@ -728,7 +728,7 @@ class Cube {
 					pixels[pxlsCreated].pxlColor = colr;
 					increaseColor(colr, white, red, orange, yellow, green, blue);
 					pxlsCreated++;
-					for (int j = 1; j < 3; j++) {
+					for (uint64_t j = 1; j < 3; j++) {
 						colr = rand() % 6;
 						while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 							colr = rand() % 6;
@@ -763,7 +763,7 @@ class Cube {
 					pixels[pxlsCreated].pxlColor = colr;
 					increaseColor(colr, white, red, orange, yellow, green, blue);
 					pxlsCreated++;
-					for (int j = 1; j < 3; j++) {
+					for (uint64_t j = 1; j < 3; j++) {
 						colr = rand() % 6;
 						while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 							colr = rand() % 6;
@@ -798,7 +798,7 @@ class Cube {
 					pixels[pxlsCreated].pxlColor = colr;
 					increaseColor(colr, white, red, orange, yellow, green, blue);
 					pxlsCreated++;
-					for (int j = 1; j < 3; j++) {
+					for (uint64_t j = 1; j < 3; j++) {
 						colr = rand() % 6;
 						while (isFull(colr, white, red, blue, green, yellow, orange) == false) {
 							colr = rand() % 6;
@@ -824,7 +824,7 @@ class Cube {
 				// <--->
 			}
 		};
-		Pixel *searchPixel(Pixel start, int x, int y, int z) { //Dx, Dy, Dz from start (tbf)
+		Pixel *searchPixel(Pixel start, uint64_t x, uint64_t y, uint64_t z) { //Dx, Dy, Dz from start (tbf)
 			
 			Pixel temp = start;
 			temp.position[0][0] += x;
@@ -840,14 +840,14 @@ class Cube {
 			temp.position[3][1] += y;
 			temp.position[3][2] += z;
 			
-			for (int i = 0; i < 54; i++) {
+			for (uint64_t i = 0; i < 54; i++) {
 				if (temp.idProducer() == pixels[i].idProducer()) {
 					
 					cout << &pixels[i];
 					return &pixels[i];
 				}
 			}
-			for (int i = 0; i < 54; i++) {
+			for (uint64_t i = 0; i < 54; i++) {
 				if (temp.position ==pixels[i].position) {
 					
 					cout << &pixels[i];
@@ -856,9 +856,9 @@ class Cube {
 			}
 		}
 		
-		Pixel* searchPixel(unsigned __int64 id) {
+		Pixel* searchPixel(uint64_t id) {
 			short post[4][3] = { 0 };
-			unsigned __int64 id2 = id;
+			uint64_t id2 = id;
 			post[0][0] = id2 / 100000000000;
 			id2 = id2 % 100000000000;
 			post[0][1] = id2 / 10000000000;
@@ -882,14 +882,14 @@ class Cube {
 			post[3][1] = id2 / 10;
 			id2 = id2 % 10;
 			post[3][2] = id2;
-			for (int i = 0; i < 54; i++) {
+			for (uint64_t i = 0; i < 54; i++) {
 				
 				if (pixels[i].idProducer() == id) {
 					return &pixels[i];
 				}
 
 			}
-			for (int i = 0; i < 54; i++) {
+			for (uint64_t i = 0; i < 54; i++) {
 			
 				if (pixels[i].position == post) {
 					return &pixels[i];
@@ -897,14 +897,14 @@ class Cube {
 
 			}
 		}
-		int searchPixel2(unsigned __int64 id) {
-			for (int i = 0; i < 54; i++) {
+		uint64_t searchPixel2(uint64_t id) {
+			for (uint64_t i = 0; i < 54; i++) {
 				if (pixels[i].idProducer() == id) {
 					return i;
 				}
 			}
 		}
-		int searchPixel3(Pixel start, int x, int y, int z) { //Dx, Dy, Dz from start (tbf)
+		uint64_t searchPixel3(Pixel start, uint64_t x, uint64_t y, uint64_t z) { //Dx, Dy, Dz from start (tbf)
 			Pixel temp(start);
 			temp.position[0][0] += x;
 			temp.position[0][1] += y;
@@ -918,7 +918,7 @@ class Cube {
 			temp.position[3][0] += x;
 			temp.position[3][1] += y;
 			temp.position[3][2] += z;
-			for (int i = 0; i < 54; i++) {
+			for (uint64_t i = 0; i < 54; i++) {
 				if (temp.idProducer() == pixels[i].idProducer()) {
 					return i;
 				}
@@ -930,7 +930,7 @@ class Cube {
 		}
 		Cube(const Cube &c) {
 			
-			for (int i = 0; i < 54; i++) {
+			for (uint64_t i = 0; i < 54; i++) {
 				pixels[i] = c.pixels[i];
 			}
 			cbCost = c.cbCost;
@@ -938,7 +938,7 @@ class Cube {
 		
 		void printCube() {
 			//
-			int i = 0;
+			uint64_t i = 0;
 			while (i < 54) {
 				cout << "Side: " << i / 9 << endl;
 				cout << pixels[i + 2].pxlColor << " " << pixels[i + 5].pxlColor << " " << pixels[i + 8].pxlColor << endl;
@@ -950,7 +950,7 @@ class Cube {
 		void rotateCube(Rotation* r) {
 			rotateCubeSupport(r->noOfBlocks, r->lOrR, r->pxlIncluded);
 		}
-		void rotateCubeSupport(int noOfBlocks, int lOrR, Pixel *init) {
+		void rotateCubeSupport(uint64_t noOfBlocks, uint64_t lOrR, Pixel *init) {
 			if (lOrR == 0) { //Left / Up
 				if (init->idProducer() == 100101201200) {
 					if (noOfBlocks == 1) {
@@ -1004,12 +1004,12 @@ class Cube {
 						Pixel* above = searchPixel(*init, 0, 0, -1);
 						Pixel* rightUPpx = searchPixel(*init, 1, 0, -1);
 						//Save colors
-						int leftclr = leftpx->pxlColor;
-						int clr = init->pxlColor;
-						int rightclr = rightpx->pxlColor;
-						int leftUPclr = leftUPpx->pxlColor;
-						int aboveClr = above->pxlColor;
-						int rightUPclr = rightUPpx->pxlColor;
+						uint64_t leftclr = leftpx->pxlColor;
+						uint64_t clr = init->pxlColor;
+						uint64_t rightclr = rightpx->pxlColor;
+						uint64_t leftUPclr = leftUPpx->pxlColor;
+						uint64_t aboveClr = above->pxlColor;
+						uint64_t rightUPclr = rightUPpx->pxlColor;
 						//Edit colors
 						leftpx->editColor(searchPixel(300301311310)->pxlColor);
 						init->editColor(searchPixel(310311321320)->pxlColor);
@@ -1067,9 +1067,9 @@ class Cube {
 						Pixel* leftpx = searchPixel(*init, -1, 0, 0);
 						Pixel* rightpx = searchPixel(*init, 1, 0, 0);
 						//Save colors
-						int leftclr = leftpx->pxlColor;
-						int clr = init->pxlColor;
-						int rightclr = rightpx->pxlColor;
+						uint64_t leftclr = leftpx->pxlColor;
+						uint64_t clr = init->pxlColor;
+						uint64_t rightclr = rightpx->pxlColor;
 						//Edit colors
 						leftpx->editColor(searchPixel(302303313312)->pxlColor);
 						init->editColor(searchPixel(312313323322)->pxlColor);
@@ -1108,12 +1108,12 @@ class Cube {
 						Pixel* above = searchPixel(*init, 0, 0, -1);
 						Pixel* rightUPpx = searchPixel(*init, 1, 0, -1);
 						//Save colors
-						int leftclr = leftpx->pxlColor;
-						int clr = init->pxlColor;
-						int rightclr = rightpx->pxlColor;
-						int leftUPclr = leftUPpx->pxlColor;
-						int aboveClr = above->pxlColor;
-						int rightUPclr = rightUPpx->pxlColor;
+						uint64_t leftclr = leftpx->pxlColor;
+						uint64_t clr = init->pxlColor;
+						uint64_t rightclr = rightpx->pxlColor;
+						uint64_t leftUPclr = leftUPpx->pxlColor;
+						uint64_t aboveClr = above->pxlColor;
+						uint64_t rightUPclr = rightUPpx->pxlColor;
 						//Edit colors
 						leftpx->editColor(searchPixel(302303313312)->pxlColor);
 						init->editColor(searchPixel(312313323322)->pxlColor);
@@ -1171,9 +1171,9 @@ class Cube {
 						Pixel* leftpx = searchPixel(*init, 0, 0, -1);
 						Pixel* rightpx = searchPixel(*init, 0, 0, 1);
 						//Save colors
-						int leftclr = leftpx->pxlColor;
-						int clr = init->pxlColor;
-						int rightclr = rightpx->pxlColor;
+						uint64_t leftclr = leftpx->pxlColor;
+						uint64_t clr = init->pxlColor;
+						uint64_t rightclr = rightpx->pxlColor;
 						//Edit colors
 						leftpx->editColor(searchPixel(030130120020)->pxlColor);
 						init->editColor(searchPixel(020120110010)->pxlColor);
@@ -1211,12 +1211,12 @@ class Cube {
 						Pixel* above = searchPixel(*init, 0, 1, 0);
 						Pixel* rightUPpx = searchPixel(*init, 0, 1, -1);
 						//Save colors
-						int leftclr = leftpx->pxlColor;
-						int clr = init->pxlColor;
-						int rightclr = rightpx->pxlColor;
-						int leftUPclr = leftUPpx->pxlColor;
-						int aboveClr = above->pxlColor;
-						int rightUPclr = rightUPpx->pxlColor;
+						uint64_t leftclr = leftpx->pxlColor;
+						uint64_t clr = init->pxlColor;
+						uint64_t rightclr = rightpx->pxlColor;
+						uint64_t leftUPclr = leftUPpx->pxlColor;
+						uint64_t aboveClr = above->pxlColor;
+						uint64_t rightUPclr = rightUPpx->pxlColor;
 						//Edit colors
 						leftpx->editColor(searchPixel(030130120020)->pxlColor);
 						init->editColor(searchPixel(020120110010)->pxlColor);
@@ -1274,9 +1274,9 @@ class Cube {
 						Pixel* leftpx = searchPixel(*init, 0, 0, -1);
 						Pixel* rightpx = searchPixel(*init, 0, 0, 1);
 						//Save colors
-						int leftclr = leftpx->pxlColor;
-						int clr = init->pxlColor;
-						int rightclr = rightpx->pxlColor;
+						uint64_t leftclr = leftpx->pxlColor;
+						uint64_t clr = init->pxlColor;
+						uint64_t rightclr = rightpx->pxlColor;
 						//Edit colors
 						leftpx->editColor(searchPixel(230220320330)->pxlColor);
 						init->editColor(searchPixel(220210310320)->pxlColor);
@@ -1314,12 +1314,12 @@ class Cube {
 						Pixel* leftUPpx = searchPixel(*init, 0, -1, 1); //leftDOWN
 						Pixel* above = searchPixel(*init, 0, -1, 0);
 						Pixel* rightUPpx = searchPixel(*init, 0, -1, -1);
-						int leftclr = leftpx->pxlColor;
-						int clr = init->pxlColor;
-						int rightclr = rightpx->pxlColor;
-						int leftUPclr = leftUPpx->pxlColor;
-						int aboveClr = above->pxlColor;
-						int rightUPclr = rightUPpx->pxlColor;
+						uint64_t leftclr = leftpx->pxlColor;
+						uint64_t clr = init->pxlColor;
+						uint64_t rightclr = rightpx->pxlColor;
+						uint64_t leftUPclr = leftUPpx->pxlColor;
+						uint64_t aboveClr = above->pxlColor;
+						uint64_t rightUPclr = rightUPpx->pxlColor;
 						//Edit colors
 						leftpx->editColor(searchPixel(230220320330)->pxlColor);
 						init->editColor(searchPixel(220210310320)->pxlColor);
@@ -1377,9 +1377,9 @@ class Cube {
 						Pixel* leftpx = searchPixel(*init, -1, 0, 0);
 						Pixel* rightpx = searchPixel(*init, 1, 0, 0);
 						//Save colors
-						int leftclr = leftpx->pxlColor;
-						int clr = init->pxlColor;
-						int rightclr = rightpx->pxlColor;
+						uint64_t leftclr = leftpx->pxlColor;
+						uint64_t clr = init->pxlColor;
+						uint64_t rightclr = rightpx->pxlColor;
 						//Edit colors
 						leftpx->editColor(searchPixel(320321331330)->pxlColor);
 						init->editColor(searchPixel(321322332331)->pxlColor);
@@ -1417,12 +1417,12 @@ class Cube {
 						Pixel* leftUPpx = searchPixel(*init, -1, -1, 0); //leftDOWN
 						Pixel* above = searchPixel(*init, -1, -1, 0);
 						Pixel* rightUPpx = searchPixel(*init, -1, -1, 0);
-						int leftclr = leftpx->pxlColor;
-						int clr = init->pxlColor;
-						int rightclr = rightpx->pxlColor;
-						int leftUPclr = leftUPpx->pxlColor;
-						int aboveClr = above->pxlColor;
-						int rightUPclr = rightUPpx->pxlColor;
+						uint64_t leftclr = leftpx->pxlColor;
+						uint64_t clr = init->pxlColor;
+						uint64_t rightclr = rightpx->pxlColor;
+						uint64_t leftUPclr = leftUPpx->pxlColor;
+						uint64_t aboveClr = above->pxlColor;
+						uint64_t rightUPclr = rightUPpx->pxlColor;
 						//Edit colors
 						leftpx->editColor(searchPixel(320321331330)->pxlColor);
 						init->editColor(searchPixel(321322332331)->pxlColor);
@@ -1484,9 +1484,9 @@ class Cube {
 							Pixel* leftpx = searchPixel(*init, -1, 0, 0);
 							Pixel* rightpx = searchPixel(*init, 1, 0, 0);
 							//Save colors
-							int leftclr = leftpx->pxlColor;
-							int clr = init->pxlColor;
-							int rightclr = rightpx->pxlColor;
+							uint64_t leftclr = leftpx->pxlColor;
+							uint64_t clr = init->pxlColor;
+							uint64_t rightclr = rightpx->pxlColor;
 							//Edit colors
 							leftpx->editColor(searchPixel(030031021020)->pxlColor);
 							init->editColor(searchPixel(020021011010)->pxlColor);
@@ -1526,12 +1526,12 @@ class Cube {
 							Pixel* above = searchPixel(*init, 0, 0, -1);
 							Pixel* rightUPpx = searchPixel(*init, 1, 0, -1);
 							//Save colors
-							int leftclr = leftpx->pxlColor;
-							int clr = init->pxlColor;
-							int rightclr = rightpx->pxlColor;
-							int leftUPclr = leftUPpx->pxlColor;
-							int aboveClr = above->pxlColor;
-							int rightUPclr = rightUPpx->pxlColor;
+							uint64_t leftclr = leftpx->pxlColor;
+							uint64_t clr = init->pxlColor;
+							uint64_t rightclr = rightpx->pxlColor;
+							uint64_t leftUPclr = leftUPpx->pxlColor;
+							uint64_t aboveClr = above->pxlColor;
+							uint64_t rightUPclr = rightUPpx->pxlColor;
 							//Edit colors
 							leftpx->editColor(searchPixel(030031021020)->pxlColor);
 							init->editColor(searchPixel(020021011010)->pxlColor);
@@ -1590,9 +1590,9 @@ class Cube {
 							Pixel* leftpx = searchPixel(*init, -1, 0, 0);
 							Pixel* rightpx = searchPixel(*init, 1, 0, 0);
 							//Save colors
-							int leftclr = leftpx->pxlColor;
-							int clr = init->pxlColor;
-							int rightclr = rightpx->pxlColor;
+							uint64_t leftclr = leftpx->pxlColor;
+							uint64_t clr = init->pxlColor;
+							uint64_t rightclr = rightpx->pxlColor;
 							//Edit colors
 							leftpx->editColor(searchPixel(032033023022)->pxlColor);
 							init->editColor(searchPixel(022023013012)->pxlColor);
@@ -1631,12 +1631,12 @@ class Cube {
 							Pixel* above = searchPixel(*init, 0, 0, -1);
 							Pixel* rightUPpx = searchPixel(*init, 1, 0, -1);
 							//Save colors
-							int leftclr = leftpx->pxlColor;
-							int clr = init->pxlColor;
-							int rightclr = rightpx->pxlColor;
-							int leftUPclr = leftUPpx->pxlColor;
-							int aboveClr = above->pxlColor;
-							int rightUPclr = rightUPpx->pxlColor;
+							uint64_t leftclr = leftpx->pxlColor;
+							uint64_t clr = init->pxlColor;
+							uint64_t rightclr = rightpx->pxlColor;
+							uint64_t leftUPclr = leftUPpx->pxlColor;
+							uint64_t aboveClr = above->pxlColor;
+							uint64_t rightUPclr = rightUPpx->pxlColor;
 							//Edit colors
 							leftpx->editColor(searchPixel(032033023022)->pxlColor);
 							init->editColor(searchPixel(022023013012)->pxlColor);
@@ -1695,9 +1695,9 @@ class Cube {
 							Pixel* leftpx = searchPixel(*init, 0, 0, -1);
 							Pixel* rightpx = searchPixel(*init, 0, 0, 1);
 							//Save colors
-							int leftclr = leftpx->pxlColor;
-							int clr = init->pxlColor;
-							int rightclr = rightpx->pxlColor;
+							uint64_t leftclr = leftpx->pxlColor;
+							uint64_t clr = init->pxlColor;
+							uint64_t rightclr = rightpx->pxlColor;
 							//Edit colors
 							leftpx->editColor(searchPixel(003013113103)->pxlColor);
 							init->editColor(searchPixel(013023123113)->pxlColor);
@@ -1737,12 +1737,12 @@ class Cube {
 							Pixel* above = searchPixel(*init, 0, 1, 0);
 							Pixel* rightUPpx = searchPixel(*init, 0, 1, -1);
 							//Save colors
-							int leftclr = leftpx->pxlColor;
-							int clr = init->pxlColor;
-							int rightclr = rightpx->pxlColor;
-							int leftUPclr = leftUPpx->pxlColor;
-							int aboveClr = above->pxlColor;
-							int rightUPclr = rightUPpx->pxlColor;
+							uint64_t leftclr = leftpx->pxlColor;
+							uint64_t clr = init->pxlColor;
+							uint64_t rightclr = rightpx->pxlColor;
+							uint64_t leftUPclr = leftUPpx->pxlColor;
+							uint64_t aboveClr = above->pxlColor;
+							uint64_t rightUPclr = rightUPpx->pxlColor;
 							//Edit colors
 							leftpx->editColor(searchPixel(003013113103)->pxlColor);
 							init->editColor(searchPixel(013023123113)->pxlColor);
@@ -1802,9 +1802,9 @@ class Cube {
 							Pixel* leftpx = searchPixel(*init, 0, 0, -1);
 							Pixel* rightpx = searchPixel(*init, 0, 0, 1);
 							//Save colors
-							int leftclr = leftpx->pxlColor;
-							int clr = init->pxlColor;
-							int rightclr = rightpx->pxlColor;
+							uint64_t leftclr = leftpx->pxlColor;
+							uint64_t clr = init->pxlColor;
+							uint64_t rightclr = rightpx->pxlColor;
 							//Edit colors
 							leftpx->editColor(searchPixel(203213313303)->pxlColor);
 							init->editColor(searchPixel(213223323313)->pxlColor);
@@ -1844,12 +1844,12 @@ class Cube {
 							Pixel* leftUPpx = searchPixel(*init, 0, -1, 1); //leftDOWN
 							Pixel* above = searchPixel(*init, 0, -1, 0);
 							Pixel* rightUPpx = searchPixel(*init, 0, -1, -1);
-							int leftclr = leftpx->pxlColor;
-							int clr = init->pxlColor;
-							int rightclr = rightpx->pxlColor;
-							int leftUPclr = leftUPpx->pxlColor;
-							int aboveClr = above->pxlColor;
-							int rightUPclr = rightUPpx->pxlColor;
+							uint64_t leftclr = leftpx->pxlColor;
+							uint64_t clr = init->pxlColor;
+							uint64_t rightclr = rightpx->pxlColor;
+							uint64_t leftUPclr = leftUPpx->pxlColor;
+							uint64_t aboveClr = above->pxlColor;
+							uint64_t rightUPclr = rightUPpx->pxlColor;
 							//Edit colors
 							leftpx->editColor(searchPixel(203213313303)->pxlColor);
 							init->editColor(searchPixel(213223323313)->pxlColor);
@@ -1908,9 +1908,9 @@ class Cube {
 							Pixel* leftpx = searchPixel(*init, -1, 0, 0);
 							Pixel* rightpx = searchPixel(*init, 1, 0, 0);
 							//Save colors
-							int leftclr = leftpx->pxlColor;
-							int clr = init->pxlColor;
-							int rightclr = rightpx->pxlColor;
+							uint64_t leftclr = leftpx->pxlColor;
+							uint64_t clr = init->pxlColor;
+							uint64_t rightclr = rightpx->pxlColor;
 							//Edit colors
 							leftpx->editColor(searchPixel(032033023022)->pxlColor);
 							init->editColor(searchPixel(031032022021)->pxlColor);
@@ -1949,12 +1949,12 @@ class Cube {
 							Pixel* leftUPpx = searchPixel(*init, -1, -1, 0); //leftDOWN
 							Pixel* above = searchPixel(*init, -1, -1, 0);
 							Pixel* rightUPpx = searchPixel(*init, -1, -1, 0);
-							int leftclr = leftpx->pxlColor;
-							int clr = init->pxlColor;
-							int rightclr = rightpx->pxlColor;
-							int leftUPclr = leftUPpx->pxlColor;
-							int aboveClr = above->pxlColor;
-							int rightUPclr = rightUPpx->pxlColor;
+							uint64_t leftclr = leftpx->pxlColor;
+							uint64_t clr = init->pxlColor;
+							uint64_t rightclr = rightpx->pxlColor;
+							uint64_t leftUPclr = leftUPpx->pxlColor;
+							uint64_t aboveClr = above->pxlColor;
+							uint64_t rightUPclr = rightUPpx->pxlColor;
 							//Edit colors
 							leftpx->editColor(searchPixel(032033023022)->pxlColor);
 							init->editColor(searchPixel(031032022021)->pxlColor);
@@ -2019,22 +2019,22 @@ class Cube {
 Cube CubeRotator(Cube cb, Rotation r) {
 	Cube n(cb);
 	Pixel pixels[54];
-	for (int i = 0; i < 54; i++) {
+	for (uint64_t i = 0; i < 54; i++) {
 		pixels[i] = n.pixels[i];
 	}
-	int lOrR = r.lOrR;
-	int numero = r.numero;
-	int noOfBlocks = r.noOfBlocks;
+	uint64_t lOrR = r.lOrR;
+	uint64_t numero = r.numero;
+	uint64_t noOfBlocks = r.noOfBlocks;
 	Pixel init = n.pixels[r.numero];
 	if (lOrR == 0) { //Left / Up
 		if (pixels[numero].idProducer() == 100101201200) {
 			if (noOfBlocks == 1) {
-				int leftpx = n.searchPixel3(init, -1, 0, 0);
-				int rightpx = n.searchPixel3(init, 1, 0, 0);
+				uint64_t leftpx = n.searchPixel3(init, -1, 0, 0);
+				uint64_t rightpx = n.searchPixel3(init, 1, 0, 0);
 				//Save colors
-				int leftclr = pixels[leftpx].pxlColor;
-				int clr = pixels[numero].pxlColor;
-				int rightclr = pixels[rightpx].pxlColor;
+				uint64_t leftclr = pixels[leftpx].pxlColor;
+				uint64_t clr = pixels[numero].pxlColor;
+				uint64_t rightclr = pixels[rightpx].pxlColor;
 				cout << "Attention! " << leftclr << clr << rightclr << endl;
 				//Edit colors
 				pixels[leftpx].editColor(pixels[n.searchPixel2(300301311310)].pxlColor);
@@ -2073,8 +2073,8 @@ Cube CubeRotator(Cube cb, Rotation r) {
 
 class Player {
 	public:
-		int position[3];
-		int cost;
+		uint64_t position[3];
+		uint64_t cost;
 		Player() {
 			cost = 0;
 			position[0] = 0;
@@ -2083,18 +2083,18 @@ class Player {
 		}
 };
 
-int findClosestToPerfectSide(Cube cb) {
-	int side = 0;
-	int wantedSide = 0;
-	int maxm = -1;
+uint64_t findClosestToPerfectSide(Cube cb) {
+	uint64_t side = 0;
+	uint64_t wantedSide = 0;
+	uint64_t maxm = -1;
 	while (side < 6) {
-		int noOfWhite = 0;
-		int noOfRed = 0;
-		int noOfBlue = 0;
-		int noOfGreen = 0;
-		int noOfYellow = 0;
-		int noOfOrange = 0;
-		for (int j = 0; j < 9; j++) {
+		uint64_t noOfWhite = 0;
+		uint64_t noOfRed = 0;
+		uint64_t noOfBlue = 0;
+		uint64_t noOfGreen = 0;
+		uint64_t noOfYellow = 0;
+		uint64_t noOfOrange = 0;
+		for (uint64_t j = 0; j < 9; j++) {
 			if (cb.pixels[side * 9 + j].pxlColor == 0) {
 				noOfRed++;
 			}
@@ -2114,7 +2114,7 @@ int findClosestToPerfectSide(Cube cb) {
 				noOfWhite++;
 			}
 		}
-		int mx = max(noOfRed, noOfBlue, noOfGreen, noOfOrange, noOfWhite, noOfYellow);
+		uint64_t mx = max(noOfRed, noOfBlue, noOfGreen, noOfOrange, noOfWhite, noOfYellow);
 		if (mx > maxm) {
 			maxm = mx;
 			wantedSide = side;
@@ -2124,15 +2124,15 @@ int findClosestToPerfectSide(Cube cb) {
 	return wantedSide;
 }
 
-int remainingPixels(int ctps, Cube cb) {
+uint64_t remainingPixels(uint64_t ctps, Cube cb) {
 	/*Return the number of pixels to fill the maximum used color of the ctps*/
-	int noOfWhite = 0;
-	int noOfRed = 0;
-	int noOfBlue = 0;
-	int noOfGreen = 0;
-	int noOfYellow = 0;
-	int noOfOrange = 0;
-	for (int j = 0; j < 9; j++) {
+	uint64_t noOfWhite = 0;
+	uint64_t noOfRed = 0;
+	uint64_t noOfBlue = 0;
+	uint64_t noOfGreen = 0;
+	uint64_t noOfYellow = 0;
+	uint64_t noOfOrange = 0;
+	for (uint64_t j = 0; j < 9; j++) {
 		if (cb.pixels[ctps * 9 + j].pxlColor == 0) {
 			noOfRed++;
 		}
@@ -2155,16 +2155,16 @@ int remainingPixels(int ctps, Cube cb) {
 	return 9 - max(noOfRed, noOfBlue, noOfGreen, noOfOrange, noOfWhite, noOfYellow);
 };
 
-int g(Cube cb, Player plr) {
+uint64_t g(Cube cb, Player plr) {
 	return cb.cbCost + plr.cost;
 };
 
-int h(Cube cb, Player plr) {
-	int t = remainingPixels(findClosestToPerfectSide(cb), cb);
+uint64_t h(Cube cb, Player plr) {
+	uint64_t t = remainingPixels(findClosestToPerfectSide(cb), cb);
 	return t/3 + t%3;
 };
 
-int f(Cube cb, Player plr) {
+uint64_t f(Cube cb, Player plr) {
 	return g(cb, plr) + h(cb, plr);
 };
 
@@ -2176,7 +2176,7 @@ void AstarAlgorithm(Cube& cb, Player& plr, Rotation* rtss) {
 	
 	
 	/*Create all cases of the frontier*/
-	for (int i = 0; i < 20; i++) {
+	for (uint64_t i = 0; i < 20; i++) {
 		Cube temp(resl);
 		//cout << rtss[i].lOrR << " " << rtss[i].noOfBlocks << endl;
 		temp.rotateCube(rtss + sizeof(Rotation)*i);
@@ -2187,9 +2187,9 @@ void AstarAlgorithm(Cube& cb, Player& plr, Rotation* rtss) {
 	}
 	/*Examine all cases of the frontier
 	Find the case n with the minimum f(n)*/
-	int min = f(frontier[0], plr);
-	int plc = 0;
-	for (int i = 1; i < 20; i++) {
+	uint64_t min = f(frontier[0], plr);
+	uint64_t plc = 0;
+	for (uint64_t i = 1; i < 20; i++) {
 		if (f(frontier[i], plr) < min) {
 			min = f(frontier[i], plr);
 			plc = i;
@@ -2235,7 +2235,7 @@ int main() {
 	cout << "Starting Cube: " << endl;
 	cb.printCube();
 	cout << "Issue is : " << "Expected ids " << "vs obtained ids " << endl;
-	 for (int i = 0; i < 54; i++) {
+	 for (uint64_t i = 0; i < 54; i++) {
 		cb.pixels[i].printPosition();
 	cout << " " << cb.pixels[i].idProducer() << endl;
 	}
@@ -2246,12 +2246,15 @@ int main() {
 	cout << "Cube created. Application of A*: ";
 	cout << endl;
 	cout << endl;
-	for (int i = 0; i < 50; i++) {
+	for (uint64_t i = 0; i < 50; i++) {
 		cout << "Attempt of applying A*: " << i << endl;
 		AstarAlgorithm(cb, plr, rts);
 		cb.printCube();
 		cout << endl;
 	}
+
+	int a;
+	cin >> a;
 
 	/*Print Result*/
 	
